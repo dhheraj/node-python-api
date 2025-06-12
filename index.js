@@ -27,7 +27,7 @@ const upload = multer({ storage: storage });
 app.post("/upload-image", upload.single("image"), (req, res) => {
   const imagePath = req.file.path;
 
-  const python = spawn("python3", ["script.py", imagePath]);
+  const python = spawn("python", ["script.py", imagePath]);
 
   let output = "";
   let error = "";
