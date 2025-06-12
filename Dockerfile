@@ -1,25 +1,27 @@
-# Use a complete base image
+# Use Node base image with Debian
 FROM node:18-bullseye
 
-# Install required OS packages
+# Install Python and system dependencies
 RUN apt-get update && \
-    apt-get install -y python3 python3-venv python3-pip tesseract-ocr libsm6 libxext6 libxrender-dev
+    apt-get install -y python3 python3-venv python3-pip tesseract-ocr libsm6 libxext6 libxrender-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Create app directory
+# Set work directory
 WORKDIR /app
 
-# Create and activate a virtual environment
+# Create and activate Python virtual environment
 RUN python3 -m venv /app/venv
 ENV PATH="/app/venv/bin:$PATH"
 
-# Copy Python and Node dependencies
+# Copy Python dependencies first and install them inside venv
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy Node dependencies and install them
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app
+# Copy rest of the app
 COPY . .
 
 # Expose port
