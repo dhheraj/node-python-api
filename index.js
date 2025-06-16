@@ -83,7 +83,7 @@ app.post("/upload", upload.single("image"), (req, res) => {
   }
 
   const imagePath = path.resolve(req.file.path);
-  const pythonScript = path.resolve("ocr_script.py");
+  const pythonScript = path.resolve("script.py");
 
   const pythonProcess = spawn("python3", [pythonScript, imagePath]);
 
