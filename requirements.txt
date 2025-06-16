@@ -1,3 +1,4 @@
 pytesseract
-opencv-python
 Pillow
+easyocr
+opencv-python-headless
